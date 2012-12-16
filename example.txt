@@ -1,0 +1,46 @@
+/* Definir personas */
+PEOPLE {
+	PERSON { ID[ps001], 
+		Name[José],
+		Surname[Escobar], 
+		Email[tal@asl.es], 
+		City[Seville] 
+	}
+	
+	PERSON { ID[ps002],
+		Name[Manuel],
+		Surname[López],
+		Email[masd@mas.es],
+		City[Madrid] 
+	}
+	
+	PERSON { ID[ps003],
+		Name[Rosa],
+		Surname[Dominguez],
+		Email[ros@us.es],
+		City[Seville] 
+	}
+	
+	PERSON { ID[ps004],
+		Name[Rafael],
+		Surname[Martínez],
+		Email[rafa@ral.es],
+		City[Oviedo]
+	}
+}  
+
+/* Definir relaciones entre personas indicando su tipo */
+CONNECTIONS {
+	NEXUS { ID1[ps001], ID2[ps003], Type[Relative] }
+	NEXUS { ID1[ps001], ID2[ps002], Type[Colleague] }
+	NEXUS { ID1[ps002], ID2[ps004], Type[Friend] }
+	NEXUS { ID1[ps004], ID2[ps003], Type[Acquaintance] }
+}
+
+/* Seccion para hacer queries acerca de las personas y sus conexiones */
+QUERIES {
+	[ps001] RelatedTo [ps004]?
+	[Relative] ConnectionsFor [ps001]?
+	[2] LevelConnectionsFor [ps002]?
+	Graph?
+}
