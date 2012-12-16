@@ -113,18 +113,18 @@ public Anasint(ParserSharedInputState state) {
 			match(PEOPLE);
 			match(6);
 			{
-			int _cnt124=0;
-			_loop124:
+			int _cnt363=0;
+			_loop363:
 			do {
 				if ((LA(1)==PERSON)) {
 					persona();
 					astFactory.addASTChild(currentAST, returnAST);
 				}
 				else {
-					if ( _cnt124>=1 ) { break _loop124; } else {throw new NoViableAltException(LT(1), getFilename());}
+					if ( _cnt363>=1 ) { break _loop363; } else {throw new NoViableAltException(LT(1), getFilename());}
 				}
 				
-				_cnt124++;
+				_cnt363++;
 			} while (true);
 			}
 			match(7);
@@ -150,14 +150,14 @@ public Anasint(ParserSharedInputState state) {
 			match(CONNECTIONS);
 			match(6);
 			{
-			_loop131:
+			_loop370:
 			do {
 				if ((LA(1)==NEXUS)) {
 					conexion();
 					astFactory.addASTChild(currentAST, returnAST);
 				}
 				else {
-					break _loop131;
+					break _loop370;
 				}
 				
 			} while (true);
@@ -185,7 +185,7 @@ public Anasint(ParserSharedInputState state) {
 			match(QUERIES);
 			match(6);
 			{
-			_loop137:
+			_loop376:
 			do {
 				if ((LA(1)==11||LA(1)==GRAPH)) {
 					consulta();
@@ -193,7 +193,7 @@ public Anasint(ParserSharedInputState state) {
 					match(17);
 				}
 				else {
-					break _loop137;
+					break _loop376;
 				}
 				
 			} while (true);
@@ -223,7 +223,7 @@ public Anasint(ParserSharedInputState state) {
 			atributo();
 			astFactory.addASTChild(currentAST, returnAST);
 			{
-			_loop127:
+			_loop366:
 			do {
 				if ((LA(1)==9)) {
 					match(9);
@@ -231,7 +231,7 @@ public Anasint(ParserSharedInputState state) {
 					astFactory.addASTChild(currentAST, returnAST);
 				}
 				else {
-					break _loop127;
+					break _loop366;
 				}
 				
 			} while (true);
@@ -287,7 +287,7 @@ public Anasint(ParserSharedInputState state) {
 			atributo();
 			astFactory.addASTChild(currentAST, returnAST);
 			{
-			_loop134:
+			_loop373:
 			do {
 				if ((LA(1)==9)) {
 					match(9);
@@ -295,7 +295,7 @@ public Anasint(ParserSharedInputState state) {
 					astFactory.addASTChild(currentAST, returnAST);
 				}
 				else {
-					break _loop134;
+					break _loop373;
 				}
 				
 			} while (true);

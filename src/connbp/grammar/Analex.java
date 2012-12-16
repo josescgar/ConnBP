@@ -209,13 +209,13 @@ tryAgain:
 		
 		match("//");
 		{
-		_loop144:
+		_loop383:
 		do {
 			if ((_tokenSet_2.member(LA(1)))) {
 				matchNot('\r');
 			}
 			else {
-				break _loop144;
+				break _loop383;
 			}
 			
 		} while (true);
@@ -235,10 +235,10 @@ tryAgain:
 		
 		match("/*");
 		{
-		_loop148:
+		_loop387:
 		do {
 			// nongreedy exit test
-			if ((LA(1)=='*') && (LA(2)=='/')) break _loop148;
+			if ((LA(1)=='*') && (LA(2)=='/')) break _loop387;
 			if (((LA(1) >= '\u0003' && LA(1) <= '\u00ff')) && ((LA(2) >= '\u0003' && LA(2) <= '\u00ff'))) {
 				{
 				if ((LA(1)=='\r') && (LA(2)=='\n')) {
@@ -254,7 +254,7 @@ tryAgain:
 				}
 			}
 			else {
-				break _loop148;
+				break _loop387;
 			}
 			
 		} while (true);
@@ -345,8 +345,8 @@ tryAgain:
 		int _saveIndex;
 		
 		{
-		int _cnt154=0;
-		_loop154:
+		int _cnt393=0;
+		_loop393:
 		do {
 			switch ( LA(1)) {
 			case 'A':  case 'B':  case 'C':  case 'D':
@@ -397,10 +397,10 @@ tryAgain:
 			}
 			default:
 			{
-				if ( _cnt154>=1 ) { break _loop154; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
+				if ( _cnt393>=1 ) { break _loop393; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
 			}
 			}
-			_cnt154++;
+			_cnt393++;
 		} while (true);
 		}
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
@@ -418,8 +418,8 @@ tryAgain:
 		if (!(!valor))
 		  throw new SemanticException("!valor");
 		{
-		int _cnt157=0;
-		_loop157:
+		int _cnt396=0;
+		_loop396:
 		do {
 			switch ( LA(1)) {
 			case 'A':  case 'B':  case 'C':  case 'D':
@@ -455,10 +455,10 @@ tryAgain:
 			}
 			default:
 			{
-				if ( _cnt157>=1 ) { break _loop157; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
+				if ( _cnt396>=1 ) { break _loop396; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
 			}
 			}
-			_cnt157++;
+			_cnt396++;
 		} while (true);
 		}
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {

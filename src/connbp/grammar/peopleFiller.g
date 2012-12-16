@@ -1,6 +1,6 @@
 header {
 	package connbp.grammar;
-	import connbp.helper.Person;
+	import connbp.helper.*;
 	import java.util.HashMap;
 	import connbp.exceptions.ConnBPSemanticException;
 	import java.util.LinkedList;
@@ -16,30 +16,30 @@ options{
 	HashMap<String,String> aux = new HashMap<String,String>();
 }
 
-entrada [HashMap<String,Person> people, HashMap<String,Boolean> attr] throws ConnBPSemanticException: 
-		#(PROGRAMA decl_personas[people,attr]);
+entrada throws ConnBPSemanticException: 
+		#(PROGRAMA decl_personas);
 		
-decl_personas [HashMap<String,Person> people, HashMap<String,Boolean> attr] throws ConnBPSemanticException: 
-		#(PEOPLE (persona[people,attr])+);
+decl_personas throws ConnBPSemanticException: 
+		#(PEOPLE (persona)+);
 			
-persona [HashMap<String,Person> people, HashMap<String,Boolean> attr] throws ConnBPSemanticException: 
-		#(p:PERSON (atributo[people,attr])+) 
+persona throws ConnBPSemanticException: 
+		#(p:PERSON (atributo)+) 
 		{
-				for(Entry<String, Boolean> e : attr.entrySet()){
+				for(Entry<String, Boolean> e : Inicializador.getInstance().getValidAttrPeople().entrySet()){
 					if(e.getValue() && !aux.containsKey(e.getKey()))
 						throw new ConnBPSemanticException("Required attribute not included in line "+p.getLine()+": "+e.getKey());
 				}
-				if(people.containsKey(aux.get("ID")))
+				if(Inicializador.getInstance().getPeople().containsKey(aux.get("ID")))
 					throw new ConnBPSemanticException("Duplicated Person ID: "+aux.get("ID"));
-				people.put(aux.get("ID"),new Person(aux));
+				Inicializador.getInstance().getPeople().put(aux.get("ID"),new Person(aux));
 				aux.clear();
 		}
 		;
 		
-atributo [HashMap<String,Person> people, HashMap<String,Boolean> attr] throws ConnBPSemanticException: 
+atributo throws ConnBPSemanticException: 
 		#(i:ATR_IDENT v:ATR_VALOR)
 		{ 
-			if(!attr.containsKey(i.getText())) 
+			if(!Inicializador.getInstance().getValidAttrPeople().containsKey(i.getText())) 
 				throw new ConnBPSemanticException("Invalid attribute in line "+i.getLine()+": "+i.getText());
 			else {
 				if(aux.containsKey(i.getText()))
@@ -49,4 +49,3 @@ atributo [HashMap<String,Person> people, HashMap<String,Boolean> attr] throws Co
 			}	
 		}
 		;
-		

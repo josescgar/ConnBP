@@ -8,9 +8,12 @@ public class Inicializador {
 	private HashMap<String,Boolean> validAttrPeople;
 	private LinkedList<String> validAttrConnections;
 	private LinkedList<String> validConnectionTypes;
-	private HashMap<String,Person> peopleAttr;
+	private HashMap<String,Person> people;
+	private LinkedList<Connection> connections;
 	
-	public Inicializador(){
+	private static Inicializador instance = null;
+	
+	private Inicializador(){
 		validAttrPeople=new HashMap<String,Boolean>();
 		validAttrPeople.put("Name",true);
 		validAttrPeople.put("Surname",false);
@@ -29,7 +32,14 @@ public class Inicializador {
 		validConnectionTypes.add("Friend");
 		validConnectionTypes.add("Acquaintance");
 		
-		peopleAttr = new HashMap<String,Person>();
+		people = new HashMap<String,Person>();
+		connections = new LinkedList<Connection>();
+	}
+	
+	public static synchronized Inicializador getInstance(){
+		if(instance==null)
+			instance=new Inicializador();
+		return instance;
 	}
 
 	public HashMap<String,Boolean> getValidAttrPeople() {
@@ -44,10 +54,12 @@ public class Inicializador {
 		return validConnectionTypes;
 	}
 
-	public HashMap<String, Person> getPeopleAttr() {
-		return peopleAttr;
+	public HashMap<String, Person> getPeople() {
+		return people;
 	}
 	
-	
+	public LinkedList<Connection> getConnections(){
+		return this.connections;
+	}
 
 }

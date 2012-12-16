@@ -1,13 +1,12 @@
-// $ANTLR : "peopleFiller.g" -> "PeopleFiller.java"$
+// $ANTLR : "connectionMaker.g" -> "ConnectionMaker.java"$
 
 	package connbp.grammar;
-	import connbp.helper.*;
-	import java.util.HashMap;
 	import connbp.exceptions.ConnBPSemanticException;
+	import java.util.HashMap;
+	import connbp.helper.*;
 	import java.util.LinkedList;
-	import java.util.Map.Entry;
 
-public interface PeopleFillerTokenTypes {
+public interface ConnectionMakerTokenTypes {
 	int EOF = 1;
 	int NULL_TREE_LOOKAHEAD = 3;
 	int PROGRAMA = 4;

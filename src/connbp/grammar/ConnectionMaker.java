@@ -1,11 +1,10 @@
-// $ANTLR : "peopleFiller.g" -> "PeopleFiller.java"$
+// $ANTLR : "connectionMaker.g" -> "ConnectionMaker.java"$
 
 	package connbp.grammar;
-	import connbp.helper.*;
-	import java.util.HashMap;
 	import connbp.exceptions.ConnBPSemanticException;
+	import java.util.HashMap;
+	import connbp.helper.*;
 	import java.util.LinkedList;
-	import java.util.Map.Entry;
 
 import antlr.TreeParser;
 import antlr.Token;
@@ -20,11 +19,11 @@ import antlr.ASTPair;
 import antlr.collections.impl.ASTArray;
 
 
-public class PeopleFiller extends antlr.TreeParser       implements PeopleFillerTokenTypes
+public class ConnectionMaker extends antlr.TreeParser       implements ConnectionMakerTokenTypes
  {
 
 	HashMap<String,String> aux = new HashMap<String,String>();
-public PeopleFiller() {
+public ConnectionMaker() {
 	tokenNames = _tokenNames;
 }
 
@@ -33,13 +32,16 @@ public PeopleFiller() {
 		AST entrada_AST_in = (_t == ASTNULL) ? null : (AST)_t;
 		
 		try {      // for error handling
-			AST __t336 = _t;
+			AST __t502 = _t;
 			AST tmp1_AST_in = (AST)_t;
 			match(_t,PROGRAMA);
 			_t = _t.getFirstChild();
-			decl_personas(_t);
+			AST tmp2_AST_in = (AST)_t;
+			if ( _t==null ) throw new MismatchedTokenException();
+			_t = _t.getNextSibling();
+			decl_conexiones(_t);
 			_t = _retTree;
-			_t = __t336;
+			_t = __t502;
 			_t = _t.getNextSibling();
 		}
 		catch (RecognitionException ex) {
@@ -49,32 +51,30 @@ public PeopleFiller() {
 		_retTree = _t;
 	}
 	
-	public final void decl_personas(AST _t) throws RecognitionException, ConnBPSemanticException {
+	public final void decl_conexiones(AST _t) throws RecognitionException, ConnBPSemanticException {
 		
-		AST decl_personas_AST_in = (_t == ASTNULL) ? null : (AST)_t;
+		AST decl_conexiones_AST_in = (_t == ASTNULL) ? null : (AST)_t;
 		
 		try {      // for error handling
-			AST __t338 = _t;
-			AST tmp2_AST_in = (AST)_t;
-			match(_t,PEOPLE);
+			AST __t504 = _t;
+			AST tmp3_AST_in = (AST)_t;
+			match(_t,CONNECTIONS);
 			_t = _t.getFirstChild();
 			{
-			int _cnt340=0;
-			_loop340:
+			_loop506:
 			do {
 				if (_t==null) _t=ASTNULL;
-				if ((_t.getType()==PERSON)) {
-					persona(_t);
+				if ((_t.getType()==NEXUS)) {
+					conexion(_t);
 					_t = _retTree;
 				}
 				else {
-					if ( _cnt340>=1 ) { break _loop340; } else {throw new NoViableAltException(_t);}
+					break _loop506;
 				}
 				
-				_cnt340++;
 			} while (true);
 			}
-			_t = __t338;
+			_t = __t504;
 			_t = _t.getNextSibling();
 		}
 		catch (RecognitionException ex) {
@@ -84,19 +84,19 @@ public PeopleFiller() {
 		_retTree = _t;
 	}
 	
-	public final void persona(AST _t) throws RecognitionException, ConnBPSemanticException {
+	public final void conexion(AST _t) throws RecognitionException, ConnBPSemanticException {
 		
-		AST persona_AST_in = (_t == ASTNULL) ? null : (AST)_t;
-		AST p = null;
+		AST conexion_AST_in = (_t == ASTNULL) ? null : (AST)_t;
+		AST n = null;
 		
 		try {      // for error handling
-			AST __t342 = _t;
-			p = _t==ASTNULL ? null :(AST)_t;
-			match(_t,PERSON);
+			AST __t508 = _t;
+			n = _t==ASTNULL ? null :(AST)_t;
+			match(_t,NEXUS);
 			_t = _t.getFirstChild();
 			{
-			int _cnt344=0;
-			_loop344:
+			int _cnt510=0;
+			_loop510:
 			do {
 				if (_t==null) _t=ASTNULL;
 				if ((_t.getType()==ATR_IDENT)) {
@@ -104,24 +104,20 @@ public PeopleFiller() {
 					_t = _retTree;
 				}
 				else {
-					if ( _cnt344>=1 ) { break _loop344; } else {throw new NoViableAltException(_t);}
+					if ( _cnt510>=1 ) { break _loop510; } else {throw new NoViableAltException(_t);}
 				}
 				
-				_cnt344++;
+				_cnt510++;
 			} while (true);
 			}
-			_t = __t342;
+			_t = __t508;
 			_t = _t.getNextSibling();
 			
-							for(Entry<String, Boolean> e : Inicializador.getInstance().getValidAttrPeople().entrySet()){
-								if(e.getValue() && !aux.containsKey(e.getKey()))
-									throw new ConnBPSemanticException("Required attribute not included in line "+p.getLine()+": "+e.getKey());
-							}
-							if(Inicializador.getInstance().getPeople().containsKey(aux.get("ID")))
-								throw new ConnBPSemanticException("Duplicated Person ID: "+aux.get("ID"));
-							Inicializador.getInstance().getPeople().put(aux.get("ID"),new Person(aux));
-							aux.clear();
-					
+					if(!aux.keySet().containsAll(Inicializador.getInstance().getValidAttrConnections()))
+						throw new ConnBPSemanticException("Required connection attribute not included in line "+n.getLine());
+					Inicializador.getInstance().getConnections().add(new Connection(Inicializador.getInstance().getPeople().get(aux.get("ID1")),Inicializador.getInstance().getPeople().get(aux.get("ID2")),aux.get("Type")));
+					aux.clear();
+				
 		}
 		catch (RecognitionException ex) {
 			reportError(ex);
@@ -134,28 +130,27 @@ public PeopleFiller() {
 		
 		AST atributo_AST_in = (_t == ASTNULL) ? null : (AST)_t;
 		AST i = null;
-		AST v = null;
+		AST a = null;
 		
 		try {      // for error handling
-			AST __t346 = _t;
+			AST __t512 = _t;
 			i = _t==ASTNULL ? null :(AST)_t;
 			match(_t,ATR_IDENT);
 			_t = _t.getFirstChild();
-			v = (AST)_t;
+			a = (AST)_t;
 			match(_t,ATR_VALOR);
 			_t = _t.getNextSibling();
-			_t = __t346;
+			_t = __t512;
 			_t = _t.getNextSibling();
 			
-						if(!Inicializador.getInstance().getValidAttrPeople().containsKey(i.getText())) 
-							throw new ConnBPSemanticException("Invalid attribute in line "+i.getLine()+": "+i.getText());
-						else {
-							if(aux.containsKey(i.getText()))
-								throw new ConnBPSemanticException("Duplicated attribute in line "+i.getLine()+": "+i.getText()+"="+v.getText());
-							else
-								aux.put(i.getText(),v.getText());
-						}	
-					
+					if(!Inicializador.getInstance().getValidAttrConnections().contains(i.getText()))
+						throw new ConnBPSemanticException("Invalid connection attribute in line "+i.getLine()+": "+i.getText());
+					if(i.getText().equals("Type") && !Inicializador.getInstance().getValidConnectionTypes().contains(a.getText()))
+						throw new ConnBPSemanticException("Invalid connection type in line "+i.getLine()+": "+a.getText());
+					if((i.getText().equals("ID1") | i.getText().equals("ID2")) && !Inicializador.getInstance().getPeople().containsKey(a.getText()))
+						throw new ConnBPSemanticException("The person with ID "+a.getText()+" in line "+i.getLine()+" doesn't exists");
+					aux.put(i.getText(),a.getText());
+				
 		}
 		catch (RecognitionException ex) {
 			reportError(ex);

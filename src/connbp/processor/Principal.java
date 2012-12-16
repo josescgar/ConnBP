@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import connbp.exceptions.ConnBPSemanticException;
 import connbp.grammar.Analex;
 import connbp.grammar.Anasint;
+import connbp.grammar.ConnectionMaker;
 import connbp.grammar.PeopleFiller;
 import connbp.helper.Inicializador;
 import antlr.RecognitionException;
@@ -17,7 +18,7 @@ import antlr.collections.AST;
 import antlr.debug.misc.ASTFrame;
 
 
-public class Procesador {
+public class Principal {
 	
 	/**
 	 * @param args
@@ -32,11 +33,14 @@ public class Procesador {
 			AST arbol = anasint.getAST();
 			ASTFrame ventana = new ASTFrame("ConnBP - Tree",arbol);
 			ventana.setVisible(true);
-			
-			Inicializador listas=new Inicializador();
+			Inicializador ini=Inicializador.getInstance();
 			
 			PeopleFiller pf = new PeopleFiller();
-			pf.entrada(arbol, listas.getPeopleAttr(), listas.getValidAttrPeople());
+			pf.entrada(arbol);
+				
+			ConnectionMaker cm = new ConnectionMaker();
+			cm.entrada(arbol);
+			
 			System.out.println();
 			
 //			Token n = analex.nextToken();
