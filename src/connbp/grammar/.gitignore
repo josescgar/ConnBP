@@ -14,3 +14,7 @@
 /ConnectionMakerTokenTypes.txt
 /PeopleFiller.smap
 /PeopleFillerTokenTypes.txt
+/QueryParser.java
+/QueryParserTokenTypes.java
+/QueryParser.smap
+/QueryParserTokenTypes.txt

@@ -10,6 +10,7 @@ import connbp.grammar.Analex;
 import connbp.grammar.Anasint;
 import connbp.grammar.ConnectionMaker;
 import connbp.grammar.PeopleFiller;
+import connbp.grammar.QueryParser;
 import connbp.helper.Inicializador;
 import antlr.RecognitionException;
 import antlr.Token;
@@ -40,6 +41,9 @@ public class Principal {
 				
 			ConnectionMaker cm = new ConnectionMaker();
 			cm.entrada(arbol);
+			
+			QueryParser qp = new QueryParser();
+			qp.entrada(arbol);
 			
 			System.out.println();
 			
