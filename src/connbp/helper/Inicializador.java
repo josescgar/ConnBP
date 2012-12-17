@@ -41,6 +41,19 @@ public class Inicializador {
 			instance=new Inicializador();
 		return instance;
 	}
+	
+	/* Only one connection will be allowed between two people.
+	 * Therefore, different types of connections for the same people
+	 * will return true. 
+	 */
+	public boolean containsConnection(Connection conn){
+		for(Connection c:this.connections){
+			if((c.getPerson1().equals(conn.getPerson1()) && c.getPerson2().equals(conn.getPerson2())) || (c.getPerson1().equals(conn.getPerson2()) && c.getPerson2().equals(conn.getPerson1())) ){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public HashMap<String,Boolean> getValidAttrPeople() {
 		return validAttrPeople;
