@@ -10,6 +10,7 @@ public class Inicializador {
 	private LinkedList<String> validConnectionTypes;
 	private HashMap<String,Person> people;
 	private LinkedList<Connection> connections;
+	private HashMap<String,LinkedList<Object>> queries;
 	
 	private static Inicializador instance = null;
 	
@@ -34,6 +35,7 @@ public class Inicializador {
 		
 		people = new HashMap<String,Person>();
 		connections = new LinkedList<Connection>();
+		queries = new HashMap<String,LinkedList<Object>>();
 	}
 	
 	public static synchronized Inicializador getInstance(){
@@ -74,5 +76,10 @@ public class Inicializador {
 	public LinkedList<Connection> getConnections(){
 		return this.connections;
 	}
+
+	public HashMap<String, LinkedList<Object>> getQueries() {
+		return queries;
+	}
+	
 
 }

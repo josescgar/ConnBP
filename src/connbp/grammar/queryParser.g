@@ -2,6 +2,7 @@ header {
 	package connbp.grammar;
 	import connbp.helper.Inicializador;
 	import connbp.exceptions.*;
+	import java.util.LinkedList;
 }
 
 class QueryParser extends TreeParser;
@@ -12,36 +13,55 @@ options {
 
 {
 	Inicializador ini=Inicializador.getInstance();
+	String error="";
 }
 
-entrada throws ConnBPSemanticException: #(PROGRAMA . . decl_consultas) ;
+entrada throws ConnBPQuerySemanticException: #(PROGRAMA . . decl_consultas) 
+	{
+		if(!error.isEmpty()){
+			throw new ConnBPQuerySemanticException(error);
+		}	
+	};
 
-decl_consultas throws ConnBPSemanticException: #(QUERIES (consulta)*) ;
+decl_consultas: #(QUERIES (consulta)*) ;
 
-consulta throws ConnBPSemanticException: #(r:RELATEDTO p1:ATR_VALOR p2:ATR_VALOR)
+consulta: #(r:RELATEDTO p1:ATR_VALOR p2:ATR_VALOR)
 			{
 				if(!ini.getPeople().containsKey(p1.getText()) || !ini.getPeople().containsKey(p2.getText()))
-					throw new ConnBPSemanticException("Invalid query argument in line "+r.getLine()+": Invalid Person ID");
+					error+="Invalid query argument in line "+r.getLine()+": Invalid Person ID\n";
+				else
+					//Añadir almacen
+					break;
 			}
 		| #(c:CONNECTIONSFOR t:ATR_VALOR p:ATR_VALOR)
 			{
 				if(!ini.getValidConnectionTypes().contains(t.getText()))
-					throw new ConnBPSemanticException("Invalid query argument in line "+c.getLine()+": Invalid connection type \""+t.getText()+"\"");
+					error+="Invalid query argument in line "+c.getLine()+": Invalid connection type \""+t.getText()+"\"\n";
 				if(!ini.getPeople().containsKey(p.getText()))
-					throw new ConnBPSemanticException("Invalid query argument in line "+c.getLine()+": Invalid Person ID");
+					error+="Invalid query argument in line "+c.getLine()+": Invalid Person ID \""+p.getText()+"\"\n";
+				else {
+					LinkedList<Object> aux=new LinkedList<Object>();
+					aux.add(t.getText());
+					aux.add(ini.getPeople().get(p.getText()));
+					ini.getQueries().put(c.getText(),aux);
+				}
 			}
 		| #(l:LEVELCONNECTIONSFOR n:ATR_VALOR pc:ATR_VALOR)
 			{
 				int level;
 				try{
 					level = Integer.parseInt(n.getText());
+					if(level<=0)
+						error+="Invalid query argument in line "+l.getLine()+": the level must be equal or greater than 1"+"\n";
+					if(!ini.getPeople().containsKey(pc.getText()))
+						error+="Invalid query argument in line "+l.getLine()+": Invalid Person ID \""+pc.getText()+"\"\n";
+					else
+						break;
+						//Añadir almacen
 				} catch (NumberFormatException e){
-					throw new ConnBPSemanticException("Invalid query argument in line "+l.getLine()+": "+n.getText()+" isn't an integer number");
+					error+="Invalid query argument in line "+l.getLine()+": "+n.getText()+" isn't an integer number"+"\n";
 				}
-				if(level<=0)
-					throw new ConnBPSemanticException("Invalid query argument in line "+l.getLine()+": the level must be equal or greater than 1");
-				if(!ini.getPeople().containsKey(pc.getText()))
-					throw new ConnBPSemanticException("Invalid query argument in line "+l.getLine()+": Invalid Person ID");
+				
 			}
 		| GRAPH
 		;

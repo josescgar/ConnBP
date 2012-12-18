@@ -2,16 +2,18 @@ package connbp.processor;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
-
-import connbp.exceptions.ConnBPSemanticException;
+import connbp.exceptions.*;
 import connbp.grammar.Analex;
 import connbp.grammar.Anasint;
 import connbp.grammar.ConnectionMaker;
 import connbp.grammar.PeopleFiller;
 import connbp.grammar.QueryParser;
 import connbp.helper.Inicializador;
+import connbp.helper.Person;
+import connbp.query.ConnectionsFor;
 import antlr.RecognitionException;
 import antlr.Token;
 import antlr.TokenStreamException;
@@ -45,6 +47,8 @@ public class Principal {
 			QueryParser qp = new QueryParser();
 			qp.entrada(arbol);
 			
+			processQueries(ini.getQueries());
+			
 			System.out.println();
 			
 //			Token n = analex.nextToken();
@@ -58,10 +62,26 @@ public class Principal {
 			e.printStackTrace();
 		} catch (TokenStreamException e) {
 			e.printStackTrace();
-		} catch (ConnBPSemanticException e){
+		} catch (ConnBPPeopleException e){
+			e.printException();
+		} catch (ConnBPConnectionException e) {
+			e.printException();
+		} catch (ConnBPQuerySemanticException e) {
 			e.printException();
 		}
 
+	}
+	
+	private static void processQueries(HashMap<String,LinkedList<Object>> queries){
+		ConnectionsFor cf = new ConnectionsFor();
+		for(Entry<String,LinkedList<Object>> e:queries.entrySet()){
+			if(e.getKey().equals("ConnectionsFor")){
+				cf.setType((String)e.getValue().get(0));
+				cf.setPerson((Person)e.getValue().get(1));
+				cf.getConnectionsFor();
+				System.out.println(cf);
+			}
+		}
 	}
 	
 
