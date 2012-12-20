@@ -41,9 +41,10 @@ consulta: #(r:RELATEDTO p1:ATR_VALOR p2:ATR_VALOR)
 					error+="Invalid query argument in line "+c.getLine()+": Invalid Person ID \""+p.getText()+"\"\n";
 				else {
 					LinkedList<Object> aux=new LinkedList<Object>();
+					aux.add(c.getText());
 					aux.add(t.getText());
 					aux.add(ini.getPeople().get(p.getText()));
-					ini.getQueries().put(c.getText(),aux);
+					ini.getQueries().add(aux);
 				}
 			}
 		| #(l:LEVELCONNECTIONSFOR n:ATR_VALOR pc:ATR_VALOR)
@@ -55,9 +56,14 @@ consulta: #(r:RELATEDTO p1:ATR_VALOR p2:ATR_VALOR)
 						error+="Invalid query argument in line "+l.getLine()+": the level must be equal or greater than 1"+"\n";
 					if(!ini.getPeople().containsKey(pc.getText()))
 						error+="Invalid query argument in line "+l.getLine()+": Invalid Person ID \""+pc.getText()+"\"\n";
-					else
-						break;
-						//Añadir almacen
+					else {
+						LinkedList<Object> aux=new LinkedList<Object>();
+						aux.add(l.getText());
+						aux.add(level);
+						aux.add(ini.getPeople().get(pc.getText()));
+						ini.getQueries().add(aux);
+					}
+						
 				} catch (NumberFormatException e){
 					error+="Invalid query argument in line "+l.getLine()+": "+n.getText()+" isn't an integer number"+"\n";
 				}

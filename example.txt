@@ -27,20 +27,39 @@ PEOPLE {
 		Email[rafa@ral.es],
 		City[Oviedo]
 	}
+	
+	PERSON { ID[ps005],
+		Name[Raquel],
+		Surname[Martínez],
+		Email[rafa@ral.es],
+		City[Oviedo]
+	}
+	
+	PERSON { ID[ps006],
+		Name[Marta],
+		Surname[Martínez],
+		Email[rafa@ral.es],
+		City[Oviedo]
+	}
 }  
 
 /* Definir relaciones entre personas indicando su tipo */
 CONNECTIONS {
-	NEXUS { ID1[ps001], ID2[ps003], Type[Relative] }
-	NEXUS { ID1[ps001], ID2[ps002], Type[Colleague] }
+	NEXUS { ID1[ps001], ID2[ps002], Type[Relative] }
+	NEXUS { ID1[ps001], ID2[ps005], Type[Colleague] }
 	NEXUS { ID1[ps002], ID2[ps004], Type[Friend] }
-	NEXUS { ID1[ps004], ID2[ps003], Type[Acquaintance] }
+	NEXUS { ID1[ps002], ID2[ps003], Type[Friend] }
+	NEXUS { ID1[ps005], ID2[ps006], Type[Friend] }
+	NEXUS { ID1[ps005], ID2[ps004], Type[Friend] }
+	NEXUS { ID1[ps003], ID2[ps006], Type[Friend] }	
+	NEXUS { ID1[ps006], ID2[ps001], Type[Friend] }
 }
 
 /* Seccion para hacer queries acerca de las personas y sus conexiones */
 QUERIES {
 	[ps001] RelatedTo [ps004]?
 	[Relative] ConnectionsFor [ps001]?
-	[2] LevelConnectionsFor [ps002]?
+	[3] LevelConnectionsFor [ps001]?
 	Graph?
+	[Friend] ConnectionsFor [ps002]?
 }

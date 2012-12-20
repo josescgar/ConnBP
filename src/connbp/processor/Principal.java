@@ -14,6 +14,7 @@ import connbp.grammar.QueryParser;
 import connbp.helper.Inicializador;
 import connbp.helper.Person;
 import connbp.query.ConnectionsFor;
+import connbp.query.LevelConnectionsFor;
 import antlr.RecognitionException;
 import antlr.Token;
 import antlr.TokenStreamException;
@@ -72,15 +73,21 @@ public class Principal {
 
 	}
 	
-	private static void processQueries(HashMap<String,LinkedList<Object>> queries){
+	private static void processQueries(LinkedList<LinkedList<Object>> queries){
 		ConnectionsFor cf = new ConnectionsFor();
-		for(Entry<String,LinkedList<Object>> e:queries.entrySet()){
-			if(e.getKey().equals("ConnectionsFor")){
-				cf.setType((String)e.getValue().get(0));
-				cf.setPerson((Person)e.getValue().get(1));
+		LevelConnectionsFor lcf = new LevelConnectionsFor();
+		for(LinkedList<Object> e:queries){
+			System.out.println("QUERY"+"\n"+"=====");
+			if(((String)e.get(0)).equals("ConnectionsFor")){
+				cf.setType((String)e.get(1));
+				cf.setPerson((Person)e.get(2));
 				cf.getConnectionsFor();
-				System.out.println(cf);
+			} else if (((String)e.get(0)).equals("LevelConnectionsFor")){
+				lcf.setLevel((Integer)e.get(1));
+				lcf.setPerson((Person)e.get(2));
+				lcf.getLevelConnectionsFor();
 			}
+			System.out.println();
 		}
 	}
 	

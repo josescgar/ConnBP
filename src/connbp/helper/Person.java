@@ -1,6 +1,7 @@
 package connbp.helper;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Person {
 	private String ID;
@@ -8,6 +9,7 @@ public class Person {
 	private String surname;
 	private String email;
 	private String city;
+	private LinkedList<Connection> connections;
 	
 	public Person(){}
 	
@@ -22,6 +24,7 @@ public class Person {
 			this.email=atributos.get("Email");
 		if(atributos.containsKey("City"))
 			this.city=atributos.get("City");
+		this.connections=new LinkedList<Connection>();
 	}
 	
 	public String toString(){
@@ -37,6 +40,7 @@ public class Person {
 		if(this.email!=null)
 			s+=" | Email: "+this.email;
 		s+="]";
+
 		return s;
 	}
 
@@ -78,6 +82,14 @@ public class Person {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public LinkedList<Connection> getConnections() {
+		return connections;
+	}
+
+	public void setConnections(LinkedList<Connection> connections) {
+		this.connections = connections;
 	}
 	
 	

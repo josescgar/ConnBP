@@ -1,21 +1,15 @@
 package connbp.helper;
 
-public class Connection {
-	private Person person1;
-	private Person person2;
+public class Connection{
+	private Person person;
 	private String relation;
 	
-	public Connection(Person p1, Person p2, String relation){
-		this.person1=p1;
-		this.person2=p2;
+	public Connection(Person p, String relation){
+		this.person=p;
 		this.relation=relation;
 	}
-	public Person getPerson1() {
-		return person1;
-	}
-
-	public Person getPerson2() {
-		return person2;
+	public Person getPerson() {
+		return person;
 	}
 
 	public String getRelation() {
@@ -23,7 +17,13 @@ public class Connection {
 	}
 
 	public String toString(){
-		return "[ "+person1.getID()+" | "+person2.getID()+" | "+relation+" ]";
+		return "[ "+person.getID()+" | "+relation+" ]";
+	}
+	@Override
+	public boolean equals(Object o) {
+		if(person.equals(((Connection)o).getPerson()))
+			return true;
+		return false;
 	}
 	
 }

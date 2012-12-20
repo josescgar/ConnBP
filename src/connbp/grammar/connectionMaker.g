@@ -21,7 +21,6 @@ options {
 entrada throws ConnBPConnectionException: #(PROGRAMA . decl_conexiones)
 		{
 			if(!error.isEmpty()){
-				ini.getConnections().clear();
 				throw new ConnBPConnectionException(error);
 			}
 		};
@@ -33,11 +32,14 @@ conexion: #(n:NEXUS (atributo)+)
 		if(!aux.keySet().containsAll(ini.getValidAttrConnections()))
 			error+="Required connection attribute not included in line "+n.getLine()+"\n";
 		if(error.isEmpty()){	
-			Connection conn = new Connection(ini.getPeople().get(aux.get("ID1")),ini.getPeople().get(aux.get("ID2")),aux.get("Type"));
-			if(!ini.containsConnection(conn))
-				ini.getConnections().add(conn);
-			else
+			Connection conn1 = new Connection(ini.getPeople().get(aux.get("ID2")),aux.get("Type"));
+			Connection conn2 = new Connection(ini.getPeople().get(aux.get("ID1")),aux.get("Type"));
+			if( !ini.getPeople().get(aux.get("ID1")).getConnections().contains(conn1) && !ini.getPeople().get(aux.get("ID2")).getConnections().contains(conn2)){
+				ini.getPeople().get(aux.get("ID1")).getConnections().add(conn1);
+				ini.getPeople().get(aux.get("ID2")).getConnections().add(conn2);
+			} else {
 				error+="Connection already exists in line "+n.getLine()+"\n";
+			}
 		}
 		aux.clear();
 	}
