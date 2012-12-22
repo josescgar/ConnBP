@@ -29,9 +29,13 @@ consulta: #(r:RELATEDTO p1:ATR_VALOR p2:ATR_VALOR)
 			{
 				if(!ini.getPeople().containsKey(p1.getText()) || !ini.getPeople().containsKey(p2.getText()))
 					error+="Invalid query argument in line "+r.getLine()+": Invalid Person ID\n";
-				else
-					//Añadir almacen
-					break;
+				else {
+					LinkedList<Object> aux=new LinkedList<Object>();
+					aux.add(r.getText());
+					aux.add(ini.getPeople().get(p1.getText()));
+					aux.add(ini.getPeople().get(p2.getText()));
+					ini.getQueries().add(aux);
+				}
 			}
 		| #(c:CONNECTIONSFOR t:ATR_VALOR p:ATR_VALOR)
 			{
@@ -69,5 +73,10 @@ consulta: #(r:RELATEDTO p1:ATR_VALOR p2:ATR_VALOR)
 				}
 				
 			}
-		| GRAPH
+		| g:GRAPH
+		{
+			LinkedList<Object> aux=new LinkedList<Object>();
+			aux.add(g.getText());
+			ini.getQueries().add(aux);
+		}
 		;

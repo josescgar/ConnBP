@@ -43,7 +43,7 @@ COMB: "/*" (options{greedy=false;}:(NUEVA_LINEA|.))* "*/"
 //Identificadores
 protected LETRA: ('a'..'z'|'A'..'Z'| '_' | 'á'..'ú');
 protected DIGITO: '0' .. '9';
-protected TEXTO: (LETRA | DIGITO | '@' | '.' | '-')+;
+protected TEXTO: (LETRA | DIGITO | '@' | '.' | '-' | BLANCO)+;
 ATR_IDENT: {!valor}? (LETRA|DIGITO)+ ;
 
 //Atributos

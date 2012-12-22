@@ -14,7 +14,9 @@ import connbp.grammar.QueryParser;
 import connbp.helper.Inicializador;
 import connbp.helper.Person;
 import connbp.query.ConnectionsFor;
+import connbp.query.Graph;
 import connbp.query.LevelConnectionsFor;
+import connbp.query.RelatedTo;
 import antlr.RecognitionException;
 import antlr.Token;
 import antlr.TokenStreamException;
@@ -76,6 +78,8 @@ public class Principal {
 	private static void processQueries(LinkedList<LinkedList<Object>> queries){
 		ConnectionsFor cf = new ConnectionsFor();
 		LevelConnectionsFor lcf = new LevelConnectionsFor();
+		RelatedTo rt = new RelatedTo();
+		Graph g = new Graph();
 		for(LinkedList<Object> e:queries){
 			System.out.println("QUERY"+"\n"+"=====");
 			if(((String)e.get(0)).equals("ConnectionsFor")){
@@ -86,6 +90,12 @@ public class Principal {
 				lcf.setLevel((Integer)e.get(1));
 				lcf.setPerson((Person)e.get(2));
 				lcf.getLevelConnectionsFor();
+			} else if (((String)e.get(0)).equals("RelatedTo")){
+				rt.setPerson1((Person)e.get(1));
+				rt.setPerson2((Person)e.get(2));
+				rt.isRelatedTo();
+			} else if (((String)e.get(0)).equals("Graph")){
+				g.drawGraph();
 			}
 			System.out.println();
 		}

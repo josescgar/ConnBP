@@ -57,9 +57,8 @@ CONNECTIONS {
 
 /* Seccion para hacer queries acerca de las personas y sus conexiones */
 QUERIES {
-	[ps001] RelatedTo [ps004]?
+	[ps003] RelatedTo [ps005]?
 	[Relative] ConnectionsFor [ps001]?
 	[3] LevelConnectionsFor [ps001]?
 	Graph?
-	[Friend] ConnectionsFor [ps002]?
 }
