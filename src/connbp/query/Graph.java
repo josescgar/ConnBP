@@ -11,6 +11,10 @@ import connbp.helper.Inicializador;
 import connbp.helper.Person;
 
 public class Graph extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private mxGraph graph;
 	private HashMap<String,Object> mxVertices;
 	private Object mainParent;
@@ -47,7 +51,7 @@ public class Graph extends JFrame {
 		getContentPane().add(graphComponent);
 		new mxCircleLayout(graph).execute(graph.getDefaultParent());
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.setSize(800, 600);
 		this.setVisible(true);
 	}
@@ -64,8 +68,6 @@ public class Graph extends JFrame {
 		for(Entry<String,Person> p:Inicializador.getInstance().getPeople().entrySet()){
 			Object vertex = graph.insertVertex(mainParent, null, p.getValue().getName()+" ["+p.getValue().getID()+"]", 1, 1, 100, 30);
 			mxVertices.put(p.getKey(),vertex);
-			
-			
 		}
 	}
 }

@@ -3,14 +3,34 @@ package connbp.query;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import javax.swing.JFrame;
+
+import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxGraph;
+
 import connbp.helper.Connection;
 import connbp.helper.Person;
 
-public class RelatedTo {
+public class RelatedTo extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Person person1;
 	private Person person2;
+	private mxGraph graph;
+	private Object mainParent;
 	
 	public RelatedTo(){
+		super("RelatedTo");
+		this.graph = new mxGraph();
+		graph.setCellsEditable(false);
+		graph.setCellsDisconnectable(false);
+		graph.setCellsResizable(false);
+		graph.setConnectableEdges(false);
+		graph.setAllowDanglingEdges(false);
+		this.mainParent = graph.getDefaultParent();
 	}
 
 	public void setPerson1(Person person1) {
@@ -22,16 +42,39 @@ public class RelatedTo {
 	}
 	
 	public void isRelatedTo(){
+		this.setTitle("Is "+person1.getName()+" ["+person1.getID()+"] related to "+person2.getName()+" ["+person2.getID()+"]?");
 		LinkedList<Connection> visited=new LinkedList<Connection>();
 		boolean found;
-		found=searchRelation(new Connection(person1, ""),visited);
+		
+		try {
+			
+			found=searchRelation(new Connection(person1, ""),visited);
+		}
+		finally
+		{
+			graph.getModel().endUpdate();
+		}
+		
 		if(found){
 			String tab="";
 			System.out.println("Relation between "+person1.getName()+" ["+person1.getID()+"] and "+person2.getName()+" ["+person2.getID()+"]:");
+			Object parent = null;
 			for(Connection c:visited){
 				tab+="\t";
 				System.out.println(tab+"| "+c.getPerson().getName()+" ["+c.getPerson().getID()+"] -> "+c.getRelation());
+				Object currentVertex = graph.insertVertex(mainParent, null, c.getPerson().getName()+" ["+c.getPerson().getID()+"]", 1, 1, 100, 30);
+				graph.insertEdge(mainParent, null, c.getRelation(), parent, currentVertex);
+				parent = currentVertex;
 			}
+			System.out.println("Drawing graph...");
+			mxGraphComponent graphComponent = new mxGraphComponent(graph);
+			graphComponent.setConnectable(false);
+			getContentPane().add(graphComponent);
+			new mxHierarchicalLayout(graph).execute(mainParent);
+			
+			this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			this.setSize(500, 500);
+			this.setVisible(true);
 		} else {
 			System.out.println(person1.getName()+" ["+person1.getID()+"] is not related to "+person2.getName()+" ["+person2.getID()+"]");
 		}

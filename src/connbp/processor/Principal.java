@@ -2,23 +2,13 @@ package connbp.processor;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map.Entry;
+import javax.swing.JFrame;
 import connbp.exceptions.*;
-import connbp.grammar.Analex;
-import connbp.grammar.Anasint;
-import connbp.grammar.ConnectionMaker;
-import connbp.grammar.PeopleFiller;
-import connbp.grammar.QueryParser;
-import connbp.helper.Inicializador;
-import connbp.helper.Person;
-import connbp.query.ConnectionsFor;
-import connbp.query.Graph;
-import connbp.query.LevelConnectionsFor;
-import connbp.query.RelatedTo;
+import connbp.grammar.*;
+import connbp.helper.*;
+import connbp.query.*;
 import antlr.RecognitionException;
-import antlr.Token;
 import antlr.TokenStreamException;
 import antlr.collections.AST;
 import antlr.debug.misc.ASTFrame;
@@ -38,6 +28,7 @@ public class Principal {
 			anasint.entrada();
 			AST arbol = anasint.getAST();
 			ASTFrame ventana = new ASTFrame("ConnBP - Tree",arbol);
+			ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			ventana.setVisible(true);
 			Inicializador ini=Inicializador.getInstance();
 			
@@ -54,11 +45,6 @@ public class Principal {
 			
 			System.out.println();
 			
-//			Token n = analex.nextToken();
-//			while(n.getType()!=Token.EOF_TYPE){
-//				System.out.println(n);
-//				n = analex.nextToken();
-//			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (RecognitionException e) {
@@ -100,6 +86,4 @@ public class Principal {
 			System.out.println();
 		}
 	}
-	
-
 }
