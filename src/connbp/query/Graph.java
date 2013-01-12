@@ -5,7 +5,6 @@ import java.util.Map.*;
 import javax.swing.JFrame;
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
 import connbp.helper.Connection;
 import connbp.helper.Inicializador;
 import connbp.helper.Person;
@@ -15,20 +14,13 @@ public class Graph extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private mxGraph graph;
+	private ConnBPGraph graph;
 	private HashMap<String,Object> mxVertices;
 	private Object mainParent;
 	
 	public Graph(){
 		super("Connection Graph");
-
-		this.graph = new mxGraph();
-		graph.setCellsEditable(false);
-		graph.setCellsDisconnectable(false);
-		graph.setCellsResizable(false);
-		graph.setConnectableEdges(false);
-		graph.setAllowDanglingEdges(false);
-		
+		this.graph = new ConnBPGraph();
 		this.mxVertices=new HashMap<String,Object>();
 		mainParent = graph.getDefaultParent();
 	}
@@ -46,13 +38,13 @@ public class Graph extends JFrame {
 			graph.getModel().endUpdate();
 		}
 
-		mxGraphComponent graphComponent = new mxGraphComponent(graph);
+		mxGraphComponent graphComponent = graph.getGraphComponent();
 		graphComponent.setConnectable(false);
 		getContentPane().add(graphComponent);
 		new mxCircleLayout(graph).execute(graph.getDefaultParent());
 		
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		this.setSize(800, 600);
+		this.pack();
 		this.setVisible(true);
 	}
 	
@@ -66,7 +58,7 @@ public class Graph extends JFrame {
 
 	private void paintAllVertices(Object mainParent){
 		for(Entry<String,Person> p:Inicializador.getInstance().getPeople().entrySet()){
-			Object vertex = graph.insertVertex(mainParent, null, p.getValue().getName()+" ["+p.getValue().getID()+"]", 1, 1, 100, 30);
+			Object vertex = graph.insertVertex(mainParent, null, p.getValue(), 1, 1, 100, 30);
 			mxVertices.put(p.getKey(),vertex);
 		}
 	}

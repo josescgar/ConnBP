@@ -20,8 +20,12 @@ public class Principal {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		if(args.length == 0){
+			System.err.println("You must specify an input file");
+			return;
+		}
 		try {
-			FileInputStream f = new FileInputStream("example.txt");
+			FileInputStream f = new FileInputStream(args[0]);
 			Analex analex = new Analex(f);
 			Anasint anasint = new Anasint(analex);
 			anasint.setASTNodeClass("connbp.tree.PositionedAST");
@@ -46,7 +50,7 @@ public class Principal {
 			System.out.println();
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.err.println("File \""+args[0]+"\" not found");
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		} catch (TokenStreamException e) {
@@ -61,26 +65,26 @@ public class Principal {
 
 	}
 	
-	private static void processQueries(LinkedList<LinkedList<Object>> queries){
-		ConnectionsFor cf = new ConnectionsFor();
-		LevelConnectionsFor lcf = new LevelConnectionsFor();
-		RelatedTo rt = new RelatedTo();
-		Graph g = new Graph();
+	private static void processQueries(LinkedList<LinkedList<Object>> queries){		
 		for(LinkedList<Object> e:queries){
 			System.out.println("QUERY"+"\n"+"=====");
 			if(((String)e.get(0)).equals("ConnectionsFor")){
+				ConnectionsFor cf = new ConnectionsFor();
 				cf.setType((String)e.get(1));
 				cf.setPerson((Person)e.get(2));
 				cf.getConnectionsFor();
 			} else if (((String)e.get(0)).equals("LevelConnectionsFor")){
+				LevelConnectionsFor lcf = new LevelConnectionsFor();
 				lcf.setLevel((Integer)e.get(1));
 				lcf.setPerson((Person)e.get(2));
 				lcf.getLevelConnectionsFor();
 			} else if (((String)e.get(0)).equals("RelatedTo")){
+				RelatedTo rt = new RelatedTo();
 				rt.setPerson1((Person)e.get(1));
 				rt.setPerson2((Person)e.get(2));
 				rt.isRelatedTo();
 			} else if (((String)e.get(0)).equals("Graph")){
+				Graph g = new Graph();
 				g.drawGraph();
 			}
 			System.out.println();

@@ -4,28 +4,20 @@ import java.util.LinkedList;
 import javax.swing.JFrame;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
 import connbp.helper.Connection;
 import connbp.helper.Person;
 
 public class LevelConnectionsFor extends JFrame{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private Person person;
 	private int level;
-	private mxGraph graph;
+	private ConnBPGraph graph;
 	private Object mainParent;
 	
 	public LevelConnectionsFor(){
 		super("LevelConnectionsFor");
-		this.graph = new mxGraph();
-		graph.setCellsEditable(false);
-		graph.setCellsDisconnectable(false);
-		graph.setCellsResizable(false);
-		graph.setConnectableEdges(false);
-		graph.setAllowDanglingEdges(false);
+		this.graph = new ConnBPGraph();
 		this.mainParent = graph.getDefaultParent();
 	}
 	
@@ -39,7 +31,7 @@ public class LevelConnectionsFor extends JFrame{
 		System.out.println(header);
 		try
 		{
-			Object parent = graph.insertVertex(mainParent, null, person.getName()+" ["+person.getID()+"]", 1, 1, 100, 30);
+			Object parent = graph.insertVertex(mainParent, null, person, 1, 1, 100, 30);
 			getConnections(person,visited,tab,0,level,parent);
 		}
 		finally
@@ -49,13 +41,13 @@ public class LevelConnectionsFor extends JFrame{
 
 		System.out.println("Drawing graph...");
 		
-		mxGraphComponent graphComponent = new mxGraphComponent(graph);
+		mxGraphComponent graphComponent = graph.getGraphComponent();
 		graphComponent.setConnectable(false);
 		getContentPane().add(graphComponent);
 		new mxHierarchicalLayout(graph).execute(mainParent);
 		
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		this.setSize(800, 600);
+		this.pack();
 		this.setVisible(true);
 	}
 	
@@ -66,8 +58,7 @@ public class LevelConnectionsFor extends JFrame{
 			for(Connection n:p.getConnections()){
 				if(!visited.contains(n.getPerson())){
 					System.out.println(tab+"| "+n.getPerson().getID()+" ["+n.getPerson().getName()+"] -> "+n.getRelation());
-					String label=n.getPerson().getName()+" ["+n.getPerson().getID()+"]";
-					Object currentVertex = graph.insertVertex(mainParent, null, label, 1, 1, 100, 30);
+					Object currentVertex = graph.insertVertex(mainParent, null, n.getPerson(), 1, 1, 100, 30);
 					graph.insertEdge(mainParent, null, n.getRelation(), parent, currentVertex);
 					getConnections(n.getPerson(),visited,tab,currentLevel+1,level,currentVertex);
 				}

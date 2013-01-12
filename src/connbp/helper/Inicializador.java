@@ -14,6 +14,7 @@ public class Inicializador {
 	private static Inicializador instance = null;
 	
 	private Inicializador(){
+		/* Valid attributes for a Person */
 		validAttrPeople=new HashMap<String,Boolean>();
 		validAttrPeople.put("Name",true);
 		validAttrPeople.put("Surname",false);
@@ -21,11 +22,13 @@ public class Inicializador {
 		validAttrPeople.put("City",false);
 		validAttrPeople.put("Email",false);
 		
+		/* Valid attributes for a Connection */
 		validAttrConnections=new LinkedList<String>();
 		validAttrConnections.add("ID1");
 		validAttrConnections.add("ID2");
 		validAttrConnections.add("Type");
 		
+		/* Valid relation types for a given Connection */
 		validConnectionTypes=new LinkedList<String>();
 		validConnectionTypes.add("Relative");
 		validConnectionTypes.add("Colleague");

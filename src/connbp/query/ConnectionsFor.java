@@ -1,5 +1,8 @@
 package connbp.query;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Set;
 import connbp.helper.*;
 
 public class ConnectionsFor {
@@ -18,7 +21,21 @@ public class ConnectionsFor {
 		System.out.println(type+" connections for "+person.getName()+" ["+person.getID()+"]:");
 		for(Connection c:person.getConnections()){
 			if(c.getRelation().equals(type)){
-				System.out.println(c.getPerson());
+				String s="[";
+				Set<String> atributos = Inicializador.getInstance().getValidAttrPeople().keySet();
+				for(String attr:atributos){
+					try {
+						Method method = c.getPerson().getClass().getDeclaredMethod("get"+attr);
+						if(method.invoke(c.getPerson())!=null)
+							s+=" "+attr+": "+method.invoke(c.getPerson());
+
+					} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						e.printStackTrace();
+						return;
+					}
+				}
+				s+=" ]";
+				System.out.println(s);
 			}
 		}
 	}

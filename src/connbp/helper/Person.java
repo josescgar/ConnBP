@@ -1,9 +1,12 @@
 package connbp.helper;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Person {
+public class Person implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String ID;
 	private String name;
 	private String surname;
@@ -28,19 +31,7 @@ public class Person {
 	}
 	
 	public String toString(){
-		String s="[";
-		if(this.ID!=null)
-			s+="ID: "+this.ID;
-		if(this.name!=null)
-			s+=" | Name: "+this.name;
-		if(this.surname!=null)
-			s+=" | Surname: "+this.surname;
-		if(this.city!=null)
-			s+=" | City: "+this.city;
-		if(this.email!=null)
-			s+=" | Email: "+this.email;
-		s+="]";
-
+		String s=this.name+" ["+this.ID+"]";
 		return s;
 	}
 
@@ -91,6 +82,4 @@ public class Person {
 	public void setConnections(LinkedList<Connection> connections) {
 		this.connections = connections;
 	}
-	
-	
 }

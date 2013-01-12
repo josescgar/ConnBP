@@ -25,14 +25,14 @@ PEOPLE {
 		Name[Rafael],
 		Surname[Martínez],
 		Email[rafa@ral.es],
-		City[Oviedo]
+		City[Huelva]
 	}
 	
 	PERSON { ID[ps005],
 		Name[Raquel],
 		Surname[Martínez],
 		Email[rafa@ral.es],
-		City[Oviedo]
+		City[Cádiz]
 	}
 	
 	PERSON { ID[ps006],
@@ -41,24 +41,49 @@ PEOPLE {
 		Email[rafa@ral.es],
 		City[Oviedo]
 	}
+	
+	PERSON { ID[ps007],
+		Name[Felipe],
+		Surname[Roldán],
+		Email[fel@rol.es],
+		City[Valladolid]
+	}
+	
+	PERSON { ID[ps008],
+		Name[Juana],
+		Surname[Martínez],
+		Email[rafa@ral.es],
+		City[Valencia]
+	}
+	
+	PERSON { ID[ps009],
+		Name[Enriqueta],
+		Surname[Martínez],
+		Email[rafa@ral.es],
+		City[Alicante]
+	}
 }  
 
 /* Definir relaciones entre personas indicando su tipo */
 CONNECTIONS {
 	NEXUS { ID1[ps001], ID2[ps002], Type[Relative] }
-	NEXUS { ID1[ps001], ID2[ps005], Type[Colleague] }
+	NEXUS { ID1[ps001], ID2[ps003], Type[Colleague] }
 	NEXUS { ID1[ps002], ID2[ps004], Type[Friend] }
-	NEXUS { ID1[ps002], ID2[ps003], Type[Friend] }
-	NEXUS { ID1[ps005], ID2[ps006], Type[Friend] }
-	NEXUS { ID1[ps005], ID2[ps004], Type[Friend] }
-	NEXUS { ID1[ps003], ID2[ps006], Type[Friend] }	
-	NEXUS { ID1[ps006], ID2[ps001], Type[Friend] }
+	NEXUS { ID1[ps002], ID2[ps005], Type[Friend] }
+	NEXUS { ID1[ps002], ID2[ps007], Type[Colleague] }
+	NEXUS { ID1[ps003], ID2[ps004], Type[Friend] }
+	NEXUS { ID1[ps003], ID2[ps008], Type[Relative] }	
+	NEXUS { ID1[ps005], ID2[ps007], Type[Friend] }
+	NEXUS { ID1[ps008], ID2[ps006], Type[Relative] }
+	NEXUS { ID1[ps006], ID2[ps009], Type[Colleague] }
 }
 
 /* Seccion para hacer queries acerca de las personas y sus conexiones */
 QUERIES {
-	[ps003] RelatedTo [ps005]?
-	[Relative] ConnectionsFor [ps001]?
-	[3] LevelConnectionsFor [ps001]?
+	[ps005] RelatedTo [ps009]?
+	[Friend] ConnectionsFor [ps002]?
+	[4] LevelConnectionsFor [ps003]?
+	[ps002] RelatedTo [ps008]?
+	[7] LevelConnectionsFor [ps001]?
 	Graph?
 }
